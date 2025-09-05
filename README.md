@@ -1,4 +1,9 @@
+
 #  Book Explorer
+
+## 🚀 Live Demo
+
+[View the live app here](https://datence-assignment.vercel.app)
 
 A full-stack web application that scrapes book data from [Books to Scrape](https://books.toscrape.com/) and provides a modern, responsive interface for browsing and filtering books.
 
