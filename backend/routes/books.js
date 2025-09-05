@@ -1,6 +1,6 @@
 import express from 'express';
 import Book from '../models/Book.js';
-import { runScraper } from '../../scraper/index.js';
+import { runScraper } from 'scraper';
 
 const router = express.Router();
 router.get('/books', async (req, res) => {
