@@ -1,0 +1,16 @@
+{
+  "name": "book-app",
+  "private": true,
+  "workspaces": [
+    "backend",
+    "scraper"
+  ],
+  "scripts": {
+    "start:backend": "npm --prefix backend start",
+    "start:scraper": "npm --prefix scraper start",
+    "start": "concurrently \"npm run start:backend\" \"npm run start:scraper\""
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.2"
+  }
+}
