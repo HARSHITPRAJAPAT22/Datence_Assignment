@@ -3,6 +3,7 @@ import express from 'express';
 import cors from 'cors';
 import { connectDatabase } from './database/script.js';
 import bookRoutes from './routes/books.js';
+import cron from 'node-cron';
 
 const app = express();
 const PORT = process.env.PORT;
@@ -32,4 +33,13 @@ app.use((error, req, res, next) => {
 
 app.listen(PORT, () => {
   console.log(`running on port ${PORT}`);
+});
+
+cron.schedule('0 0 * * *', async () => {
+  try {
+    await Book.deleteMany({});
+    await runScraper();
+  } catch (error) {
+    console.error('Cron scraper error:', error.message);
+  }
 });

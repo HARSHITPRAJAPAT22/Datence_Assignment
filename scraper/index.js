@@ -16,6 +16,7 @@ function getPrice(priceText) {
 }
 
 async function runScraper() {
+  const allBooks = [];
   try {
     await connectDatabase();
     await Book.deleteMany({});
@@ -64,6 +65,7 @@ async function runScraper() {
         }
         
         await Book.insertMany(books);
+        allBooks.push(...books);
         totalBooks += books.length;
         const hasNext = $('.next a').length > 0;
         if (!hasNext) {
@@ -85,9 +87,8 @@ async function runScraper() {
      
   } catch (error) {
     console.error('Scraper error:', error.message);
-  } finally {
-    await disconnectDatabase();
-  }
+  } 
+  return allBooks;
 }
 
 export { runScraper };

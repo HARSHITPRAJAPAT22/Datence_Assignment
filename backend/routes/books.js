@@ -1,6 +1,7 @@
 import express from 'express';
 import Book from '../models/Book.js';
-import { runScraper } from '../scraper/index.js';
+import { runScraper } from '../../scraper/index.js';
+import { disconnectDatabase } from '../database/script.js';
 
 const router = express.Router();
 router.get('/books', async (req, res) => {
@@ -100,10 +101,11 @@ router.get('/books/:id', async (req, res) => {
 });
 
 router.post('/refresh', async (req, res) => {
+    const allBooks = [];
   try {
     await Book.deleteMany({});
     const scrapedBooks = await runScraper();
-    
+    allBooks.push(...scrapedBooks);
     res.json({
       success: true,
       message: `Successfully scraped and stored ${scrapedBooks.length} books`,
@@ -120,6 +122,7 @@ router.post('/refresh', async (req, res) => {
       error: error.message
     });
   }
+  return allBooks;
 });
 
 router.get('/stats', async (req, res) => {
